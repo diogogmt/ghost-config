@@ -14,9 +14,30 @@ var mailgun = procEnv.GHOST_MAIL_PROVIDER != null && procEnv.GHOST_MAIL_PROVIDER
 var mail = {};
 
 var theme = {};
-if (procEnv.GHOST_DISQUS_SHORTNAME) { theme.disqusShortname = procEnv.GHOST_DISQUS_SHORTNAME; }
-if (procEnv.GHOST_GANALYTICS_TRACKING_ID) { theme.googleAnalyticsTrackingId = procEnv.GHOST_GANALYTICS_TRACKING_ID; }
-if (procEnv.GHOST_GANALYTICS_DEFAULT_URL) { theme.googleAnalyticsDefaultUrl = procEnv.GHOST_GANALYTICS_DEFAULT_URL; }
+if (procEnv.GHOST_DISQUS_SHORTNAME) {
+    theme.disqus = {};
+    theme.discus.shortname = procEnv.GHOST_DISQUS_SHORTNAME;
+}
+if (procEnv.GHOST_GANALYTICS_TRACKING_ID) {
+    theme.google = theme.google || {};
+    theme.google.analytics = theme.google.analytics || {};
+    theme.google.analytics.trackingId = procEnv.GHOST_GANALYTICS_TRACKING_ID;
+}
+if (procEnv.GHOST_GANALYTICS_DEFAULT_URL) {
+    theme.google = theme.google || {};
+    theme.google.analytics = theme.google.analytics || {};
+    theme.google.analytics.defaultUrl = procEnv.GHOST_GANALYTICS_DEFAULT_URL;
+}
+if (procEnv.GHOST_GITHUB_URL) { theme.github = { url: procEnv.GHOST_GITHUB_URL }; }
+if (procEnv.GHOST_LINKEDIN_URL) { theme.linkedin = { url: procEnv.GHOST_LINKEDIN_URL }; }
+if (procEnv.GHOST_TWITTER_URL) { theme.twitter = { url: procEnv.GHOST_TWITTER_URL }; }
+if (procEnv.GHOST_GOOGLE_PLUS_URL) {
+    theme.google = theme.google || {};
+    theme.google.plus = theme.google.plus || {};
+    theme.google.plus = { url: procEnv.GHOST_GOOGLE_PLUS_URL };
+}
+if (procEnv.GHOST_YOUTUBE_URL) { theme.youtube = { url: procEnv.GHOST_YOUTUBE_URL }; }
+if (procEnv.GHOST_CONTACT_URL) { theme.contact = { email: procEnv.GHOST_CONTACT_URL }; }
 
 if (mailgun) {
     mail = {
@@ -33,6 +54,7 @@ if (mailgun) {
 var contentPath = procEnv.GHOST_CONTENT || path.join(__dirname, '/content/');
 var commonConfig = {
     url: procEnv.GHOST_URL || 'http://my-ghost-blog.com',
+    test: 'test123',
     mail: mail,
     database: {
         client: 'sqlite3',
@@ -56,6 +78,8 @@ var commonConfig = {
 
 config = {
     // ### Production
+    // When running Ghost in the wild, use the production environment
+    // Configure your URL and mail settings here
     production: commonConfig,
 
     // ### Development **(default)**
