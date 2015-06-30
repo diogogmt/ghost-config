@@ -16,7 +16,7 @@ var mail = {};
 var theme = {};
 if (procEnv.GHOST_DISQUS_SHORTNAME) {
     theme.disqus = {};
-    theme.discus.shortname = procEnv.GHOST_DISQUS_SHORTNAME;
+    theme.disqus.shortname = procEnv.GHOST_DISQUS_SHORTNAME;
 }
 if (procEnv.GHOST_GANALYTICS_TRACKING_ID) {
     theme.google = theme.google || {};
